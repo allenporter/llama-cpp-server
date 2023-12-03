@@ -22,6 +22,7 @@ RUN pip3 install llama_cpp_python[server]==$LLAMA_CPP_PYTHON_VERSION
 
 # Prepare server environment
 COPY server/start.sh $SERVER_DIR/start.sh
+COPY server/model-fetch.sh $SERVER_DIR/model-fetch.sh
 RUN chmod +x $SERVER_DIR/start.sh
 
 ENV MODEL_URL=""
@@ -29,8 +30,9 @@ ENV MODEL_NAME=""
 ENV MODEL_DIR=/data/models
 WORKDIR $SERVER_DIR
 
-# We need to set the host to 0.0.0.0 to allow outside access
+# Set environment variable for the host
 ENV HOST=0.0.0.0
+ENV PORT=8000
 
-EXPOSE 8000
+EXPOSE ${PORT}
 ENTRYPOINT ["./start.sh"]

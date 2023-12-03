@@ -4,14 +4,13 @@ This is a thin wrapper around [llama-cpp-python](https://github.com/abetlen/llam
 which is an OpenAI compatible wrapper around llama2 alowing the family of models 
 to be exposed.
 
-This exists to allow docker containers that are more flexible for simple deployment
-in a cluster. The containers for that project each require signifcant manual setup.
-These could be pushed upstream if this pattern seems useful.
+That project already has Dockerfiles but they aren't necessarily all built as
+images. It would be an improvement to fix the upstream projects build workflow.
 
 ## Approach
 
 - A separate docker image is built for a specific architecture or hardware profile (e.g. gpu type)
-- Models are specified as configuration, downloaded, and persisted not in the container
+- Models are specified as configuration, downloaded, and persisted on a volume outside the container
 
 ## Local testing
 
