@@ -9,10 +9,15 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        suffix:
+          - simple
+          - cuda
+          - cublas
 
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag llama-cpp-server:$(date +%s)
+      run: docker build . --file Dockerfile.${{ matrix.suffix }} --tag llama-cpp-server-${{ matrix.suffix }}:$(date +%s)
