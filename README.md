@@ -26,10 +26,3 @@ $ docker run \
     -p 8000:8000 \
     -t llama-cpp-server:dev
 ```
-
-## Development
-
-Work to do:
-- [x] Initial skeleton
-- [ ] k8s resources
-- [ ] helm chart
