@@ -38,6 +38,7 @@ RUN chmod +x $SERVER_DIR/start.sh
 ENV MODEL_URL=""
 ENV MODEL_NAME=""
 ENV MODEL_DIR=/data/models
+ENV N_GPU_LAYERS=0
 WORKDIR $SERVER_DIR
 
 # Set environment variable for the host
