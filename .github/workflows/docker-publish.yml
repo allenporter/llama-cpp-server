@@ -36,16 +36,16 @@ jobs:
       matrix:
         image:
           - context: .
-            image: ${IMAGE_NAME}-simple
+            image: ${{ env.IMAGE_NAME }}-simple
             dockerfile: Dockerfile.simple
           - context: .
-            image: ${IMAGE_NAME}-cuda
+            image: ${{ env.IMAGE_NAME }}-cuda
             dockerfile: Dockerfile.cuda
           - context: .
-            image: ${IMAGE_NAME}-cublas
+            image: ${{ env.IMAGE_NAME }}-cublas
             dockerfile: Dockerfile.cublas
           - context: model-fetch
-            image: ${IMAGE_NAME}-model-fetch
+            image: ${{ env.IMAGE_NAME }}-model-fetch
             dockerfile: Dockerfile
 
     steps:
