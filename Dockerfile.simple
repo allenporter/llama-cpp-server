@@ -1,18 +1,21 @@
 FROM python:3.11-slim-bullseye
 
+ENV SERVER_DIR=/var/lib/llama
+RUN mkdir -p $SERVER_DIR
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
         python3 \
         python3-pip \
         build-essential \
-        curl \
         && \
-    python3 -m pip install --upgrade pip && \
-    rm -rf /var/lib/apt/lists/*
+    python3 -m pip install --upgrade pip
 
-ENV SERVER_DIR=/var/lib/llama
-RUN mkdir -p $SERVER_DIR
+COPY requirements-deps.txt $SERVER_DIR
+RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
+
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt $SERVER_DIR
 RUN pip3 install -r $SERVER_DIR/requirements.txt

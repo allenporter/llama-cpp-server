@@ -1,25 +1,31 @@
 FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
+ENV SERVER_DIR=/var/lib/llama
+RUN mkdir -p $SERVER_DIR
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
         python3 \
         python3-pip \
         build-essential \
-        curl \
+        && \
+    python3 -m pip install --upgrade pip
+
+COPY requirements-deps.txt $SERVER_DIR
+RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
+
+# Accellerator specific dependencies
+RUN apt-get install -y \
         ocl-icd-opencl-dev \
         opencl-headers \
         clinfo \
         libclblast-dev \
         libopenblas-dev \
         && \
-    python3 -m pip install --upgrade pip && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
-
-ENV SERVER_DIR=/var/lib/llama
-RUN mkdir -p $SERVER_DIR
 
 COPY requirements.txt $SERVER_DIR
 ENV CUDA_DOCKER_ARCH=all

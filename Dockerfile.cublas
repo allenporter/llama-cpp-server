@@ -1,20 +1,25 @@
 FROM python:3.11-slim-bullseye
 
+ENV SERVER_DIR=/var/lib/llama
+RUN mkdir -p $SERVER_DIR
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
         python3 \
         python3-pip \
         build-essential \
-        curl \
+        && \
+    python3 -m pip install --upgrade pip
+
+COPY requirements-deps.txt $SERVER_DIR
+RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
+
+RUN apt-get install -y \
         libopenblas-dev \
         pkg-config \
         && \
-    python3 -m pip install --upgrade pip && \
     rm -rf /var/lib/apt/lists/*
-
-ENV SERVER_DIR=/var/lib/llama
-RUN mkdir -p $SERVER_DIR
 
 COPY requirements.txt $SERVER_DIR
 RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip3 install -r $SERVER_DIR/requirements.txt
