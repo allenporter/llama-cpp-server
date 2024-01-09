@@ -83,6 +83,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ matrix.image.image }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -92,6 +95,7 @@ jobs:
         with:
           context: ${{ matrix.image.context }}
           file: ${{ matrix.image.dockerfile }}
+          push: ${{ github.event.pull_request.head.repo.full_name == 'allenporter/llama-cpp-server' || github.event_name != 'pull_request' }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
