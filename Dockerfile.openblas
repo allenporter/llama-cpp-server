@@ -15,10 +15,14 @@ RUN apt-get update && \
 COPY requirements-deps.txt $SERVER_DIR
 RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
 
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y \
+        libopenblas-dev \
+        pkg-config \
+        && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt $SERVER_DIR
-RUN pip3 install -r $SERVER_DIR/requirements.txt
+RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip3 install -r $SERVER_DIR/requirements.txt
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
