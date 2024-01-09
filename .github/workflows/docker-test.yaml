@@ -27,16 +27,16 @@ jobs:
       matrix:
         image:
           - context: .
-            image: ${{ env.IMAGE_NAME }}-simple
+            image: ${{ github.repository }}-simple
             dockerfile: Dockerfile.simple
           - context: .
-            image: ${{ env.IMAGE_NAME }}-cuda
+            image: ${{ github.repository }}-cuda
             dockerfile: Dockerfile.cuda
           - context: .
-            image: ${{ env.IMAGE_NAME }}-cublas
+            image: ${{ github.repository }}-cublas
             dockerfile: Dockerfile.cublas
           - context: model-fetch
-            image: ${{ env.IMAGE_NAME }}-model-fetch
+            image: ${{ github.repository }}-model-fetch
             dockerfile: Dockerfile
 
     steps:
