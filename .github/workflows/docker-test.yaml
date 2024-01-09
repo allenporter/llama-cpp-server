@@ -5,6 +5,12 @@ on:
     branches:
       - main
   pull_request:
+    paths:
+      - Dockerfile.*
+      - model-fetch/**
+      - .github/workflows/docker-test.yaml
+      - requirements.txt
+      - requirements-deps.txt
 
 env:
   REGISTRY: ghcr.io
