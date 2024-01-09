@@ -5,3 +5,4 @@ uvicorn==0.24.0.post1
 sse-starlette==1.8.2
 pydantic-settings==2.1.0
 starlette-context==0.3.6
+llama_cpp_python[server]==0.2.20

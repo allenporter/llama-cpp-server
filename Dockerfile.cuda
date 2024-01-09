@@ -1,5 +1,4 @@
-ARG CUDA_IMAGE="12.1.1-devel-ubuntu22.04"
-FROM nvidia/cuda:${CUDA_IMAGE}
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -23,27 +22,13 @@ ENV SERVER_DIR=/var/lib/llama
 RUN mkdir -p $SERVER_DIR
 
 COPY requirements.txt $SERVER_DIR
-RUN pip3 install -r $SERVER_DIR/requirements.txt
-
 ENV CUDA_DOCKER_ARCH=all
 ENV LLAMA_CUBLAS=1
-ENV LLAMA_CPP_PYTHON_VERSION=0.2.20
-RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip3 install llama_cpp_python[server]==$LLAMA_CPP_PYTHON_VERSION
-
-# Prepare server environment
-COPY server/start.sh $SERVER_DIR/start.sh
-COPY server/model-fetch.sh $SERVER_DIR/model-fetch.sh
-RUN chmod +x $SERVER_DIR/start.sh
-
-ENV MODEL_URL=""
-ENV MODEL_NAME=""
-ENV MODEL_DIR=/data/models
-ENV N_GPU_LAYERS=0
-WORKDIR $SERVER_DIR
+RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip3 install -r $SERVER_DIR/requirements.txt
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
 ENV PORT=8000
 
 EXPOSE ${PORT}
-ENTRYPOINT ["./start.sh"]
+CMD python3 -m llama_cpp.server
