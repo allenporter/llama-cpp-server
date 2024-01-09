@@ -34,10 +34,19 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        suffix:
-          - simple
-          - cuda
-          - cublas
+        image:
+          - context: .
+            image: ${IMAGE_NAME}-simple
+            dockerfile: Dockerfile.simple
+          - context: .
+            image: ${IMAGE_NAME}-cuda
+            dockerfile: Dockerfile.cuda
+          - context: .
+            image: ${IMAGE_NAME}-cublas
+            dockerfile: Dockerfile.cublas
+          - context: model-fetch
+            image: ${IMAGE_NAME}-model-fetch
+            dockerfile: Dockerfile
 
     steps:
       - name: Checkout repository
@@ -73,7 +82,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.suffix }}
+          images: ${{ env.REGISTRY }}/${{ matrix.image.image }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -81,8 +90,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile.${{ matrix.suffix }}
+          context: ${{ matrix.image.context }}
+          file: ${{ matrix.image.dockerfile }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
