@@ -41,7 +41,8 @@ $ docker run -it \
     -v "./models/:/data/models" \
     -v "./config/:/data" \
     -e "CONFIG_FILE=/data/config.json" \
-    ghcr.io/allenporter/llama-cpp-server-simple:main
+    -p "8000:8000" \
+    ghcr.io/allenporter/llama-cpp-server-clblast:main
 ```
 
 ## Local development
