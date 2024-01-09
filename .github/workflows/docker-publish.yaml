@@ -27,8 +27,11 @@ jobs:
           image: ${{ github.repository }}-cuda
           dockerfile: Dockerfile.cuda
         - context: .
-          image: ${{ github.repository }}-cublas
-          dockerfile: Dockerfile.cublas
+          image: ${{ github.repository }}-openblas
+          dockerfile: Dockerfile.openblas
+        - context: .
+          image: ${{ github.repository }}-clblast
+          dockerfile: Dockerfile.clblast
         - context: model-fetch
           image: ${{ github.repository }}-model-fetch
           dockerfile: model-fetch/Dockerfile

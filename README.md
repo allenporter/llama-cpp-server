@@ -10,7 +10,7 @@ and support automated model fetching from urls.
 ## Configuration
 
 See https://llama-cpp-python.readthedocs.io/en/latest/server/#configuration-and-multi-model-support
-and set the `CONFIG_FILE`` environment variable.
+and set the `CONFIG_FILE` environment variable.
 
 ## Fetching models
 
