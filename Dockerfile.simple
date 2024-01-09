@@ -25,4 +25,4 @@ ENV HOST=0.0.0.0
 ENV PORT=8000
 
 EXPOSE ${PORT}
-CMD python3 -m llama_cpp.server
+ENTRYPOINT [ "python3", "-m", "llama_cpp.server" ]
