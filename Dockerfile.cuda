@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
+FROM nvidia/cuda:12.3.1-devel-ubuntu22.04
 
 ENV SERVER_DIR=/var/lib/llama
 RUN mkdir -p $SERVER_DIR
