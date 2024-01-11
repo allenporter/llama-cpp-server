@@ -73,6 +73,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ${{ matrix.image.context }}
+        push: true
         file: ${{ matrix.image.dockerfile }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
