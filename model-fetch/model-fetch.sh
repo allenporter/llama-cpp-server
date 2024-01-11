@@ -15,7 +15,7 @@ if [ -z "${MODEL_DIR}" ]; then
   exit 1
 fi
 if [ -z "${MODEL_URLS}" ]; then
-  echo "Required env MODEL_URL not set"
+  echo "Required env MODEL_URLS not set"
   exit 1
 fi
 
