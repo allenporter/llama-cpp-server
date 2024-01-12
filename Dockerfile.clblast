@@ -18,6 +18,8 @@ RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
 RUN apt-get install -y \
         libopenblas-dev \
         pkg-config \
+        clinfo \
+        intel-opencl-icd \
         && \
     rm -rf /var/lib/apt/lists/*
 
