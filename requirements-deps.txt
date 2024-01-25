@@ -2,6 +2,6 @@ cmake==3.28.1
 scikit-build==0.17.6
 fastapi==0.109.0
 uvicorn==0.27.0
-sse-starlette==1.8.2
+sse-starlette==2.0.0
 pydantic-settings==2.1.0
 starlette-context==0.3.6
