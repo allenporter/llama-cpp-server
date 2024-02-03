@@ -1,6 +1,6 @@
 cmake==3.28.1
 scikit-build==0.17.6
-fastapi==0.109.0
+fastapi==0.109.1
 uvicorn==0.27.0.post1
 sse-starlette==2.0.0
 pydantic-settings==2.1.0
