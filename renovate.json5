@@ -7,6 +7,10 @@
   "assignees": ["allenporter"],
   "packageRules": [
     {
+      "matchPackagePatterns": ["nvidia/cuda"],
+      "enabled": false
+    },
+    {
       "description": "Minor updates are automatic",
       "automerge": true,
       "automergeType": "branch",
