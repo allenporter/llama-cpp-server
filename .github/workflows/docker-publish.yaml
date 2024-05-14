@@ -4,6 +4,11 @@ on:
   release:
     types: [published]
 
+permissions:
+  id-token: write
+  contents: read
+  attestations: write
+
 env:
   REGISTRY: ghcr.io
 
