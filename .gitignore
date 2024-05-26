@@ -2,3 +2,4 @@ bin/
 models/
 config
 .env/
+.DS_Store
