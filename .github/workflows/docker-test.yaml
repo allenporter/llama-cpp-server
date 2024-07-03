@@ -34,9 +34,6 @@ jobs:
         - context: .
           image: ${{ github.repository }}-cpu
           dockerfile: Dockerfile.cpu
-        - context: model-fetch
-          image: ${{ github.repository }}-model-fetch
-          dockerfile: model-fetch/Dockerfile
 
     steps:
     - name: Checkout repository
