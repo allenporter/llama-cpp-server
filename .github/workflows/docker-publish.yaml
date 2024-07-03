@@ -24,6 +24,9 @@ jobs:
         - context: .
           image: ${{ github.repository }}-cuda
           dockerfile: Dockerfile.cuda
+        - context: .
+          image: ${{ github.repository }}-cpu
+          dockerfile: Dockerfile.cpu
         - context: model-fetch
           image: ${{ github.repository }}-model-fetch
           dockerfile: model-fetch/Dockerfile
