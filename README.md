@@ -13,20 +13,42 @@ and support automated model fetching from urls.
 | ----- | ----------- |
 | `ghcr.io/allenporter/llama-cpp-server-cuda` | Preferred on NVidia GPUs |
 | `ghcr.io/allenporter/llama-cpp-server-cpu` | Preferred for CPUs |
-| `ghcr.io/allenporter/llama-cpp-server-model-fetch` | Helper container for downloading models from URLs |
+
 ## Examples
 
 Below are examples using the container images.
 
 ### Fetching models
 
-Fetch a model:
+The container is packaged with `huggingface-cli` for pre-downloading models. llama-cpp-python
+will download models if specified by the hf repo id, however its not supported for all fields
+yet (e.g. tokenizer config).
+
+Download supporting model files except gguf files:
 
 ```bash
 $ docker run -it \
-    -v "./models/:/data/models:rw" \
-    -e "MODEL_URLS=https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q4_K_M.gguf" \
-    ghcr.io/allenporter/llama-cpp-server-model-fetch:main
+    -v "./models/:/data/models" \
+    -v "./models/cache/:/root/.cache" \
+    --entrypoint huggingface-cli \
+    ghcr.io/allenporter/llama-cpp-server-cpu:v2.21.1 \
+        download TheBloke/Mistral-7B-Instruct-v0.1-GGUF \
+        --exclude '*.gguf' \
+        --local-dir=/data/models/Mistral-7B-Instruct-v0.1 
+```
+ 
+Download the specific gguf model:
+
+```
+$ docker run -it \
+    -v "./models/:/data/models" \
+    -v "./models/cache/:/root/.cache" \
+    --entrypoint huggingface-cli \
+    ghcr.io/allenporter/llama-cpp-server-cpu:v2.21.1 \
+        download TheBloke/Mistral-7B-Instruct-v0.1-GGUF \
+        mistral-7b-instruct-v0.1.Q4_K_M.gguf \
+        --local-dir=/data/models/Mistral-7B-Instruct-v0.1
+
 ```
 
 ### Running a server
@@ -38,22 +60,8 @@ more details on the config file format.
 $ docker run -it \
     -v "./models/:/data/models" \
     -v "./config/:/data" \
+    -v "./models/cache/:/root/.cache" \
     -e "CONFIG_FILE=/data/config.json" \
     -p "8000:8000" \
-    ghcr.io/allenporter/llama-cpp-server-openblas:main
-```
-
-## Local development
-
-Build the model fetcher:
-```bash
-$ docker build -t model-fetch:dev model-fetch/
-```
-
-Fetch a model:
-```bash
-$ docker run -it \
-    -v "./models/:/data/models:rw" \
-    -e "MODEL_URLS=https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q4_K_M.gguf" \
-    model-fetch:dev
+    ghcr.io/allenporter/llama-cpp-server-cpu:v2.21.1
 ```
