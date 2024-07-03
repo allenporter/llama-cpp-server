@@ -1,0 +1,34 @@
+FROM python:3.12-slim-bullseye
+
+ENV SERVER_DIR=/var/lib/llama
+RUN mkdir -p $SERVER_DIR
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+        python3 \
+        python3-pip \
+        build-essential \
+        && \
+    python3 -m pip install --upgrade pip
+
+COPY requirements-deps.txt $SERVER_DIR
+RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
+
+RUN apt-get install -y \
+        libopenblas-dev \
+        pkg-config \
+        clinfo \
+        intel-opencl-icd \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt $SERVER_DIR
+RUN CMAKE_ARGS="-DLLAMA_CLBLAST=on" pip3 install -r $SERVER_DIR/requirements.txt
+
+# Set environment variable for the host
+ENV HOST=0.0.0.0
+ENV PORT=8000
+
+EXPOSE ${PORT}
+ENTRYPOINT [ "python3", "-m", "llama_cpp.server" ]
