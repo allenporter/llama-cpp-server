@@ -22,14 +22,8 @@ jobs:
         image:
         # github.repository as <account>/<repo>
         - context: .
-          image: ${{ github.repository }}-simple
-          dockerfile: Dockerfile.simple
-        - context: .
           image: ${{ github.repository }}-cuda
           dockerfile: Dockerfile.cuda
-        - context: .
-          image: ${{ github.repository }}-openblas
-          dockerfile: Dockerfile.openblas
         - context: .
           image: ${{ github.repository }}-clblast
           dockerfile: Dockerfile.clblast

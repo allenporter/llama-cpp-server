@@ -11,8 +11,6 @@ and support automated model fetching from urls.
 
 | Image | Description |
 | ----- | ----------- |
-| `ghcr.io/allenporter/llama-cpp-server-simple` | No special hardware acceleration |
-| `ghcr.io/allenporter/llama-cpp-server-openblas` | OpenBLAS CPU-only based computations |
 | `ghcr.io/allenporter/llama-cpp-server-clblast` | Uses OpenCL for hardware accelleration (can use Intel or other GPUs) |
 | `ghcr.io/allenporter/llama-cpp-server-cuda` | Preferred on NVidia GPUs |
 | `ghcr.io/allenporter/llama-cpp-server-model-fetch` | Helper container for downloading models from URLs |
