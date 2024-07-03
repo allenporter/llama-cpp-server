@@ -12,6 +12,7 @@ and support automated model fetching from urls.
 | Image | Description |
 | ----- | ----------- |
 | `ghcr.io/allenporter/llama-cpp-server-cuda` | Preferred on NVidia GPUs |
+| `ghcr.io/allenporter/llama-cpp-server-cpu` | Preferred for CPUs |
 | `ghcr.io/allenporter/llama-cpp-server-model-fetch` | Helper container for downloading models from URLs |
 ## Examples
 
@@ -39,7 +40,7 @@ $ docker run -it \
     -v "./config/:/data" \
     -e "CONFIG_FILE=/data/config.json" \
     -p "8000:8000" \
-    ghcr.io/allenporter/llama-cpp-server-clblast:main
+    ghcr.io/allenporter/llama-cpp-server-openblas:main
 ```
 
 ## Local development
