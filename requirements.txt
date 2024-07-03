@@ -1,4 +1,4 @@
-llama_cpp_python[server]==0.2.79
+llama_cpp_python[server]==0.2.81
 # Required for HFTokenizer which is required for functionary
 transformers==4.42.3
 huggingface-hub==0.23.4
