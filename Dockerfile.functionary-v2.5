@@ -1,0 +1,47 @@
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
+
+ENV SERVER_DIR=/var/lib/llama
+RUN mkdir -p $SERVER_DIR
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+        python3 \
+        python3-pip \
+        build-essential \
+        && \
+    python3 -m pip install --upgrade pip
+
+COPY requirements-deps.txt $SERVER_DIR
+RUN pip3 install -r $SERVER_DIR/requirements-deps.txt
+
+# Accellerator specific dependencies
+RUN apt-get install -y \
+        ocl-icd-opencl-dev \
+        opencl-headers \
+        clinfo \
+        libclblast-dev \
+        libopenblas-dev \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
+# Clone repo
+ARG REPO="allenporter/llama-cpp-python"
+ARG BRANCH="functionary-chat-handler-v2.5"
+WORKDIR /workspace
+RUN git clone -b $BRANCH https://github.com/$REPO llama-cpp-python
+
+
+COPY requirements.txt $SERVER_DIR
+ENV CUDA_DOCKER_ARCH=all
+ENV LLAMA_CUDA=1
+RUN CMAKE_ARGS="-LLAMA_CUDA=on" pip3 install -e llama-cpp-python
+
+# Set environment variable for the host
+ENV HOST=0.0.0.0
+ENV PORT=8000
+
+EXPOSE ${PORT}
+ENTRYPOINT [ "python3", "-m", "llama_cpp.server" ]

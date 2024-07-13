@@ -13,6 +13,8 @@ and support automated model fetching from urls.
 | ----- | ----------- |
 | `ghcr.io/allenporter/llama-cpp-server-cuda` | Preferred on NVidia GPUs |
 | `ghcr.io/allenporter/llama-cpp-server-cpu` | Preferred for CPUs |
+| `ghcr.io/allenporter/llama-cpp-server-functionary-v2.5` | CUDA version that supports functionary-v2.5 |
+
 
 ## Examples
 
