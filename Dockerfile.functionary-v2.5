@@ -38,7 +38,7 @@ RUN git clone -b $BRANCH https://github.com/$REPO llama-cpp-python
 # COPY requirements.txt $SERVER_DIR
 ENV CUDA_DOCKER_ARCH=all
 ENV LLAMA_CUDA=1
-RUN CMAKE_ARGS="-LLAMA_CUDA=on" pip3 install -e /workspace/llama-cpp-python
+RUN CMAKE_ARGS="-DGGML_CUDA=on" pip3 install -e /workspace/llama-cpp-python
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
