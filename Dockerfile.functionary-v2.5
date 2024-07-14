@@ -32,13 +32,14 @@ RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/v
 ARG REPO="allenporter/llama-cpp-python"
 ARG BRANCH="functionary-chat-handler-v2.5"
 WORKDIR /workspace
-RUN git clone -b $BRANCH https://github.com/$REPO llama-cpp-python
+RUN git clone -b $BRANCH --recurse-submodules https://github.com/$REPO llama-cpp-python
 
 
 # COPY requirements.txt $SERVER_DIR
+WORKDIR /workspace/llama-cpp-python
 ENV CUDA_DOCKER_ARCH=all
 ENV LLAMA_CUDA=1
-RUN CMAKE_ARGS="-DGGML_CUDA=on" pip3 install -e /workspace/llama-cpp-python
+RUN CMAKE_ARGS="-DGGML_CUDA=on" pip3 install -e .[server]
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
