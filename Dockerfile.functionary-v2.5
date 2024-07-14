@@ -41,6 +41,9 @@ ENV CUDA_DOCKER_ARCH=all
 ENV LLAMA_CUDA=1
 RUN CMAKE_ARGS="-DGGML_CUDA=on" pip3 install -e .[server]
 
+# Manually copied from requirements.txt
+RUN pip3 install transformers==4.42.4 huggingface-hub==0.23.4
+
 # Set environment variable for the host
 ENV HOST=0.0.0.0
 ENV PORT=8000
