@@ -9,6 +9,7 @@ RUN apt-get update && \
         python3 \
         python3-pip \
         build-essential \
+        git \
         && \
     python3 -m pip install --upgrade pip
 
@@ -28,11 +29,6 @@ RUN apt-get install -y \
 RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
 
 # Clone repo
-RUN apt-get install -y \
-        git \
-        && \
-    rm -rf /var/lib/apt/lists/*
-
 ARG REPO="allenporter/llama-cpp-python"
 ARG BRANCH="functionary-chat-handler-v2.5"
 WORKDIR /workspace
