@@ -25,6 +25,9 @@ jobs:
           image: ${{ github.repository }}-cuda
           dockerfile: Dockerfile.cuda
         - context: .
+          image: ${{ github.repository }}-functionary-v2.5
+          dockerfile: Dockerfile.functionary-v2.5
+        - context: .
           image: ${{ github.repository }}-cpu
           dockerfile: Dockerfile.cpu
 
