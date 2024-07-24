@@ -1,4 +1,4 @@
 llama_cpp_python[server]==0.2.82
 # Required for HFTokenizer which is required for functionary
 transformers==4.42.4
-huggingface-hub==0.24.0
+huggingface-hub==0.24.2
