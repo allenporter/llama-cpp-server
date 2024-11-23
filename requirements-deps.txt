@@ -1,4 +1,4 @@
-cmake==3.31.0.1
+cmake==3.31.1
 scikit-build==0.18.1
 fastapi==0.115.5
 uvicorn==0.32.1
